@@ -14,4 +14,4 @@ Changes as of yet:
 
 Builds with Watcom C/C++ 10.6.
 
-For the sake of transparency, this project extensively uses AI code. test
+For the sake of transparency, this project extensively uses AI code. test 2
