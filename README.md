@@ -1,0 +1,15 @@
+<img width="1339" height="956" alt="banner4" src="https://github.com/user-attachments/assets/d337d229-a914-4639-b317-50838a3640fc" />
+
+
+# Takusan is a fork of Shadow Warrior 1.2 with multiplayer-related QoL, bugfixes, and restored features.
+
+Changes as of yet:
+1. Automatic demo recording of multiplayer games, regardless if it was started from COMMIT/SETUP or in-game menu, including composure of .WB files for WangBang demo player.
+2. Re-enabled fast forward/slo-mo demo controls, added demo pause and rewinding. Rewinding could be toggled off by setting DemoRewind to 0 under ;TAKUSAN SETTINGS in your SW.CFG
+3. Re-enabled bots with uncommented better pathfinding, could be toggled on with -bots# argument. Example: sw -level23 -bots7
+4. -aim# argument to toggle AutoAim on and off. This helps with multiplayer games started via -autonet.
+5. Patched MACT386.LIB with Build Mouse Fix by CTPAX aka CHE@TER.
+
+Builds with Watcom C/C++ 10.6. 
+
+This project extensively uses AI code. If you don't like it, I don't give a fuck. Have fun.
