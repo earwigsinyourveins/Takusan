@@ -1,0 +1,2 @@
+rts.c(149): Warning! W202: Symbol 'i' has been defined, but not referenced
+rts.c(258): Warning! W301: No prototype found for 'allocache'

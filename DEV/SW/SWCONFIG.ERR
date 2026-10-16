@@ -1,0 +1,2 @@
+swconfig.c(361): Warning! W301: No prototype found for 'CONFIG_WriteSetup'
+swconfig.c(362): Warning! W301: No prototype found for 'RTS_Shutdown'

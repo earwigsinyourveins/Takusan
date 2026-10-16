@@ -1,0 +1,2 @@
+quake.c(216): Warning! W301: No prototype found for 'mulscale16'
+quake.c(214): Warning! W301: No prototype found for 'divscale16'

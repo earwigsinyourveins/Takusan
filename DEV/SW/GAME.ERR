@@ -1,0 +1,23 @@
+game.c(286): Warning! W201: Unreachable code
+game.c(307): Warning! W201: Unreachable code
+game.c(1040): Warning! W111: Meaningless use of an expression
+game.c(1110): Warning! W301: No prototype found for 'setbrightness'
+game.c(1094): Warning! W301: No prototype found for 'getvalidvesamodes'
+game.c(1027): Warning! W301: No prototype found for 'Z_AvailHeap'
+game.c(1807): Warning! W301: No prototype found for 'flushperms'
+game.c(1810): Warning! W301: No prototype found for 'ClearStartMost'
+game.c(1738): Warning! W301: No prototype found for 'LoadAnm'
+game.c(2072): Warning! W301: No prototype found for 'playanm'
+game.c(2278): Warning! W301: No prototype found for 'MenuCommPlayerQuit'
+game.c(2714): Warning! W301: No prototype found for 'ScreenCaptureKeys'
+game.c(2801): Warning! W301: No prototype found for 'ResetPalette'
+game.c(2802): Warning! W301: No prototype found for 'COVER_SetReverb'
+game.c(3161): Warning! W301: No prototype found for 'SetCrosshair'
+game.c(3180): Warning! W301: No prototype found for 'SendVersion'
+game.c(3163): Warning! W301: No prototype found for 'SetRedrawScreen'
+game.c(3241): Warning! W301: No prototype found for 'CheckVersion'
+game.c(4725): Warning! W301: No prototype found for 'PlaySoundRTS'
+game.c(4941): Warning! W301: No prototype found for 'MUSIC_Continue'
+game.c(4931): Warning! W301: No prototype found for 'MUSIC_Pause'
+game.c(5578): Warning! W301: No prototype found for 'mulscale'
+game.c(5835): Warning! W301: No prototype found for 'minigametext'

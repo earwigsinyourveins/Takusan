@@ -1,0 +1,19 @@
+save.c(336): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+save.c(364): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+save.c(591): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+save.c(788): Warning! W113: Pointer type mismatch
+save.c(790): Warning! W113: Pointer type mismatch
+save.c(790): Warning! W113: Pointer type mismatch
+save.c(793): Warning! W101: Non-portable pointer conversion
+save.c(805): Warning! W113: Pointer type mismatch
+save.c(807): Warning! W113: Pointer type mismatch
+save.c(807): Warning! W113: Pointer type mismatch
+save.c(810): Warning! W101: Non-portable pointer conversion
+save.c(894): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+save.c(1318): Warning! W113: Pointer type mismatch
+save.c(1327): Warning! W113: Pointer type mismatch
+save.c(1511): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+save.c(1524): Warning! W301: No prototype found for 'SetupPreCache'
+save.c(1577): Warning! W301: No prototype found for 'SetRedrawScreen'
+save.c(1580): Warning! W301: No prototype found for 'setbrightness'
+save.c(1595): Warning! W301: No prototype found for 'FX_SetVolume'

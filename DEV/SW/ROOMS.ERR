@@ -1,0 +1,5 @@
+rooms.c(539): Warning! W101: Non-portable pointer conversion
+rooms.c(563): Warning! W101: Non-portable pointer conversion
+rooms.c(609): Warning! W101: Non-portable pointer conversion
+rooms.c(626): Warning! W101: Non-portable pointer conversion
+rooms.c(292): Warning! W301: No prototype found for 'scale'

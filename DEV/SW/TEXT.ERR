@@ -1,0 +1,5 @@
+text.c(82): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+text.c(106): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+text.c(203): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+text.c(218): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+text.c(90): Warning! W301: No prototype found for 'SetRedrawScreen'

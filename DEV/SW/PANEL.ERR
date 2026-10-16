@@ -1,0 +1,9 @@
+panel.c(86): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+panel.c(107): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+panel.c(130): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+panel.c(1231): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+panel.c(6898): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+panel.c(6983): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+panel.c(7072): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+panel.c(7365): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+panel.c(7382): Warning! W120: Using result of a cast operator as an lvalue is not standard C

@@ -1,0 +1,2 @@
+skull.c(331): Warning! W301: No prototype found for 'SpawnLittleExp'
+skull.c(294): Warning! W301: No prototype found for 'UpdateSinglePlayKills'

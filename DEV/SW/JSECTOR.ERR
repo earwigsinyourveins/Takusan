@@ -1,0 +1,7 @@
+jsector.c(1160): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+jsector.c(1176): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+jsector.c(1180): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+jsector.c(1184): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+jsector.c(1188): Warning! W120: Using result of a cast operator as an lvalue is not standard C
+jsector.c(605): Warning! W301: No prototype found for 'COVER_SetReverb'
+jsector.c(594): Warning! W301: No prototype found for 'klabs'

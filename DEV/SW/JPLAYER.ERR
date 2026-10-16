@@ -1,0 +1,6 @@
+jplayer.c(211): Warning! W301: No prototype found for 'SetRedrawScreen'
+jplayer.c(537): Warning! W301: No prototype found for 'mulscale17'
+jplayer.c(543): Warning! W301: No prototype found for 'mulscale14'
+jplayer.c(661): Warning! W301: No prototype found for 'clearbufbyte'
+jplayer.c(603): Warning! W301: No prototype found for 'klabs'
+jplayer.c(532): Warning! W301: No prototype found for 'tmulscale11'

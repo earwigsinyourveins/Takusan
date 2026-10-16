@@ -1,0 +1,2 @@
+break.c(488): Warning! W101: Non-portable pointer conversion
+break.c(834): Warning! W301: No prototype found for 'SpriteQueueDelete'

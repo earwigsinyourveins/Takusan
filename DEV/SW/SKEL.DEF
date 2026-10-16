@@ -1,0 +1,37 @@
+//-------------------------------------------------------------------------
+/*
+Copyright (C) 2019 GHI Media, LLC
+
+This file is part of Shadow Warrior (1997).
+
+Shadow Warrior (1997) is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+*/
+//-------------------------------------------------------------------------
+
+//#line "skel.c" 476
+extern int SetupSkel(short SpriteNum);
+//#line "skel.c" 508
+extern int DoSkelInitTeleport(short SpriteNum);
+//#line "skel.c" 520
+extern int DoSkelTeleport(short SpriteNum);
+//#line "skel.c" 554
+extern int DoSkelTermTeleport(short SpriteNum);
+//#line "skel.c" 564
+extern int NullSkel(short SpriteNum);
+//#line "skel.c" 578
+extern int DoSkelPain(short SpriteNum);
+//#line "skel.c" 591
+extern int DoSkelMove(short SpriteNum);

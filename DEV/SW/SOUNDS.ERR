@@ -1,0 +1,3 @@
+sounds.c(936): Warning! W301: No prototype found for 'RTS_GetSound'
+sounds.c(933): Warning! W301: No prototype found for 'RTS_NumSounds'
+sounds.c(1969): Warning! W301: No prototype found for 'DebugWriteString'

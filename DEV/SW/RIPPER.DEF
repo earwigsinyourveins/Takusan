@@ -1,0 +1,59 @@
+//-------------------------------------------------------------------------
+/*
+Copyright (C) 2019 GHI Media, LLC
+
+This file is part of Shadow Warrior (1997).
+
+Shadow Warrior (1997) is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+*/
+//-------------------------------------------------------------------------
+
+//#line "ripper.c" 719
+extern int SetupRipper(short SpriteNum);
+//#line "ripper.c" 766
+extern int GetJumpHeight(short jump_speed,short jump_grav);
+//#line "ripper.c" 783
+extern int PickJumpSpeed(short SpriteNum,long pix_height);
+//#line "ripper.c" 808
+extern int PickJumpMaxSpeed(short SpriteNum,short max_speed);
+//#line "ripper.c" 841
+extern int InitRipperHang(short SpriteNum);
+//#line "ripper.c" 904
+extern int DoRipperHang(short SpriteNum);
+//#line "ripper.c" 919
+extern int DoRipperMoveHang(short SpriteNum);
+//#line "ripper.c" 959
+extern int DoRipperHangJF(short SpriteNum);
+//#line "ripper.c" 992
+extern int DoRipperBeginJumpAttack(short SpriteNum);
+//#line "ripper.c" 1031
+extern int DoRipperMoveJump(short SpriteNum);
+//#line "ripper.c" 1061
+extern int DoRipperQuickJump(short SpriteNum);
+//#line "ripper.c" 1087
+extern int NullRipper(short SpriteNum);
+//#line "ripper.c" 1101
+extern int DoRipperPain(short SpriteNum);
+//#line "ripper.c" 1114
+extern int DoRipperRipHeart(int SpriteNum);
+//#line "ripper.c" 1129
+extern int DoRipperStandHeart(int SpriteNum);
+//#line "ripper.c" 1141
+extern void RipperHatch(short Weapon);
+//#line "ripper.c" 1193
+extern int DoScaleSprite(short SpriteNum);
+//#line "ripper.c" 1227
+extern int DoRipperMove(short SpriteNum);

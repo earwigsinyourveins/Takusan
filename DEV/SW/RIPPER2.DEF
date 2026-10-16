@@ -1,0 +1,53 @@
+//-------------------------------------------------------------------------
+/*
+Copyright (C) 2019 GHI Media, LLC
+
+This file is part of Shadow Warrior (1997).
+
+Shadow Warrior (1997) is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+*/
+//-------------------------------------------------------------------------
+
+//#line "ripper2.c" 856
+extern int SetupRipper2(short SpriteNum);
+//#line "ripper2.c" 907
+extern int InitRipper2Hang(short SpriteNum);
+//#line "ripper2.c" 970
+extern int DoRipper2Hang(short SpriteNum);
+//#line "ripper2.c" 985
+extern int DoRipper2MoveHang(short SpriteNum);
+//#line "ripper2.c" 1025
+extern int DoRipper2HangJF(short SpriteNum);
+//#line "ripper2.c" 1058
+extern int DoRipper2BeginJumpAttack(short SpriteNum);
+//#line "ripper2.c" 1097
+extern int DoRipper2MoveJump(short SpriteNum);
+//#line "ripper2.c" 1127
+extern int DoRipper2QuickJump(short SpriteNum);
+//#line "ripper2.c" 1153
+extern int NullRipper2(short SpriteNum);
+//#line "ripper2.c" 1167
+extern int DoRipper2Pain(short SpriteNum);
+//#line "ripper2.c" 1180
+extern int DoRipper2RipHeart(int SpriteNum);
+//#line "ripper2.c" 1195
+extern int DoRipper2StandHeart(int SpriteNum);
+//#line "ripper2.c" 1207
+extern void Ripper2Hatch(short Weapon);
+//#line "ripper2.c" 1259
+extern int DoRipper2Move(short SpriteNum);
+//#line "ripper2.c" 1299
+extern int InitRipper2Charge(short SpriteNum);

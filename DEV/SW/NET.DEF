@@ -1,0 +1,59 @@
+//-------------------------------------------------------------------------
+/*
+Copyright (C) 2019 GHI Media, LLC
+
+This file is part of Shadow Warrior (1997).
+
+Shadow Warrior (1997) is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+*/
+//-------------------------------------------------------------------------
+
+//#line "net.c" 97
+extern long EncodeBits(SW_PACKET *pak,SW_PACKET *old_pak,char *buf);
+//#line "net.c" 157
+extern long DecodeBits(SW_PACKET *pak,SW_PACKET *old_pak,char *buf);
+//#line "net.c" 216
+extern void PauseGame(void );
+//#line "net.c" 229
+extern void ResumeGame(void );
+//#line "net.c" 239
+extern void PauseAction(void );
+//#line "net.c" 246
+extern void ResumeAction(void );
+//#line "net.c" 253
+extern void SendMessage(short pnum,char *text);
+//#line "net.c" 265
+extern void InitNetPlayerOptions(void );
+//#line "net.c" 300
+extern void Connect(void );
+//#line "net.c" 326
+extern void waitforeverybody(void );
+//#line "net.c" 363
+extern BOOL MyCommPlayerQuit(void );
+//#line "net.c" 415
+extern void ErrorCorrectionQuit(void );
+//#line "net.c" 441
+extern void InitNetVars(void );
+//#line "net.c" 472
+extern void InitTimingVars(void );
+//#line "net.c" 491
+extern void AddSyncInfoToPacket(long *j);
+//#line "net.c" 508
+extern void faketimerhandler(void );
+//#line "net.c" 820
+extern void checkmasterslaveswitch(void );
+//#line "net.c" 825
+extern void getpackets(void );

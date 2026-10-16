@@ -1,0 +1,2 @@
+colormap.c(416): Warning! W301: No prototype found for 'VBE_getPalette'
+colormap.c(403): Warning! W301: No prototype found for 'VBE_setPalette'

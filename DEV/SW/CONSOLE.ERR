@@ -1,0 +1,5 @@
+console.c(618): Warning! W301: No prototype found for 'Z_AvailHeap'
+console.c(607): Warning! W301: No prototype found for 'COVER_SetReverb'
+console.c(1096): Warning! W301: No prototype found for 'SendMulitNameChange'
+console.c(1112): Warning! W301: No prototype found for 'SafeFileExists'
+console.c(1121): Warning! W301: No prototype found for 'CONFIG_ReadSetup'

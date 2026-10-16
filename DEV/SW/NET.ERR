@@ -1,0 +1,6 @@
+net.c(105): Warning! W301: No prototype found for 'tenSWSendPacket'
+net.c(138): Warning! W301: No prototype found for 'tenSWGetPacket'
+net.c(367): Warning! W301: No prototype found for 'SetRedrawScreen'
+net.c(644): Warning! W301: No prototype found for 'DebugWriteString'
+net.c(1393): Warning! W301: No prototype found for 'PlaySoundRTS'
+net.c(1450): Warning! W301: No prototype found for 'ResetMenuInput'

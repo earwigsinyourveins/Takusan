@@ -1,0 +1,8 @@
+ninja.c(306): Warning! W104: Inconsistent levels of indirection
+ninja.c(311): Warning! W104: Inconsistent levels of indirection
+ninja.c(316): Warning! W104: Inconsistent levels of indirection
+ninja.c(321): Warning! W104: Inconsistent levels of indirection
+ninja.c(326): Warning! W104: Inconsistent levels of indirection
+ninja.c(1898): Warning! W301: No prototype found for 'UpdateSinglePlayKills'
+ninja.c(2146): Warning! W301: No prototype found for 'COVER_SetReverb'
+ninja.c(2310): Warning! W301: No prototype found for 'setbrightness'

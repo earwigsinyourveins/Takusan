@@ -1,0 +1,41 @@
+//-------------------------------------------------------------------------
+/*
+Copyright (C) 2019 GHI Media, LLC
+
+This file is part of Shadow Warrior (1997).
+
+Shadow Warrior (1997) is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+*/
+//-------------------------------------------------------------------------
+
+//#line "setup.c" 37
+extern void SetupGameButtons(void );
+//#line "setup.c" 49
+extern void CenterCenter(void );
+//#line "setup.c" 54
+extern void UpperLeft(void );
+//#line "setup.c" 59
+extern void LowerRight(void );
+//#line "setup.c" 64
+extern void CenterThrottle(void );
+//#line "setup.c" 69
+extern void CenterRudder(void );
+//#line "setup.c" 84
+extern int32 GetTime(void );
+//#line "setup.c" 89
+extern void InitSetup(void );
+//#line "setup.c" 110
+extern void TermSetup(void );

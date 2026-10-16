@@ -1,0 +1,4 @@
+sprite.c(4108): Warning! W301: No prototype found for 'BunnyHatch2'
+sprite.c(4723): Warning! W301: No prototype found for 'dmulscale16'
+sprite.c(4726): Warning! W301: No prototype found for 'mulscale'
+sprite.c(7156): Warning! W301: No prototype found for 'DoSpawnTeleporterEffectPlace'

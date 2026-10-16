@@ -1,0 +1,62 @@
+//-------------------------------------------------------------------------
+/*
+Copyright (C) 2019 GHI Media, LLC
+
+This file is part of Shadow Warrior (1997).
+
+Shadow Warrior (1997) is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+*/
+//-------------------------------------------------------------------------
+
+typedef struct
+    {
+    char Name[32];
+    long Offset;
+    }SYM_TABLE, *SYM_TABLEp;
+
+extern int _nullarea;
+extern int __begtext;
+
+extern SYM_TABLEp SymTableCode;
+extern SYM_TABLEp SymTableData;
+
+extern long SymCountCode;
+extern long SymCountData;
+
+extern long SymDataSegNum;
+extern long SymCodeSegNum;
+extern char SymDataSegPrefix[];
+extern char SymCodeSegPrefix[];
+
+extern long SymDataSegOffset;
+extern long SymCodeSegOffset;
+
+long filesize( FILE *fp );
+unsigned long SymDataPtrToOffset(char *ptr);
+unsigned long SymCodePtrToOffset(char *ptr);
+void * SymOffsetToDataPtr(long sym_offset);
+void * SymOffsetToCodePtr(long sym_offset);
+char * NextLine(char *ptr);
+char * StartOfLine(char *base_ptr, char *ptr);
+void FindDataSegPrefix(char *base_ptr);
+void FindCodeSegPrefix(char *base_ptr);
+long ParseMapFile(char *base_ptr, SYM_TABLEp SymTable, char *prefix);
+SYM_TABLEp SearchSymTableByOffset(SYM_TABLEp SymTable, int count, unsigned long key_sym_offset, unsigned long *offset_from_symbol);
+SYM_TABLEp SearchSymTableByName(SYM_TABLEp SymTable, int count, char *key_sym_name);
+char * LoadMapFile(char *name, char *base_ptr);
+void LoadSymTable(char *name, SYM_TABLEp *SymTable, long *count);
+    
+

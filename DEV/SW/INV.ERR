@@ -1,0 +1,2 @@
+inv.c(599): Warning! W301: No prototype found for 'setbrightness'
+inv.c(774): Warning! W301: No prototype found for 'SetRedrawScreen'
