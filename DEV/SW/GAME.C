@@ -3219,13 +3219,13 @@ VOID InitRunLevel(VOID)
            for the first multiplayer match, before DemoRecordSetup writes
            the demo header. */
         if (!DemoRecording && !DemoPlaying && !DemoEdit && !DemoMode &&
-            (numplayers > 1 || (BotMode && FakeMultiNumPlayers > 0)))
+            !BotMode && numplayers > 1)
             DemoAutoRecordStart();
 
         DemoRecordSetup();
         }
     else if (!DemoRecording && !DemoPlaying && !DemoEdit && !DemoMode &&
-             (numplayers > 1 || (BotMode && FakeMultiNumPlayers > 0)))
+             !BotMode && numplayers > 1)
         {
         /* DemoInitOnce stays TRUE across in-game-menu re-entry. Start a new
            automatic recording for each subsequent multiplayer match too. */
@@ -3349,11 +3349,11 @@ VOID AlphaMessage(VOID)
     Global_PLock = TRUE; // Set the hardwired parental lock mode!
     _clearscreen( _GCLEARSCREEN );
     _displaycursor( _GCURSOROFF );
-    
+    //intro 2
     _setbkcolor(_LIGHTBLUE);
     _settextcolor(15);
     _outtext(""
-    "                    SHADOW WARRIOR TAKUSAN BALLS EDITION                      \n"
+    "                    SHADOW WARRIOR TAKUSAN BALLS EDITION         2            \n"
     "                          By Riki-Oh aka Mawxiwtz                             \n");
     
     _setbkcolor(_BLACK);
@@ -3379,11 +3379,11 @@ VOID AlphaMessage(VOID)
     {
     _clearscreen( _GCLEARSCREEN );
     _displaycursor( _GCURSOROFF );
-    
+    //intro 3
     _setbkcolor(_LIGHTBLUE);
     _settextcolor(15);
     _outtext(""
-    "                    SHADOW WARRIOR TAKUSAN BALLS EDITION                    \n"
+    "                    SHADOW WARRIOR TAKUSAN BALLS EDITION          3         \n"
     "                          By Riki-Oh aka Mawxiwtz                           \n");
     
     _setbkcolor(_BLACK);
@@ -3444,11 +3444,11 @@ VOID AlphaMessage(VOID)
     {
     _clearscreen( _GCLEARSCREEN );
     _displaycursor( _GCURSOROFF );
-    
+    //intro 4
     _setbkcolor(_LIGHTBLUE);
     _settextcolor(15);
     _outtext(""
-    "                   SHADOW WARRIOR TAKUSAN BALLS EDITION                   \n"
+    "                   SHADOW WARRIOR TAKUSAN BALLS EDITION          4        \n"
     "                         By Riki-Oh aka Mawxiwtz                          \n");
     
     _setbkcolor(_BLACK);
@@ -3647,12 +3647,12 @@ VOID AlphaMessage(VOID)
     {
     _clearscreen( _GCLEARSCREEN );
     _displaycursor( _GCURSOROFF );
-    
+ //intro 1   
     _setbkcolor(_LIGHTBLUE);
     _settextcolor(15);
     _outtext(""
-    "                   SHADOW WARRIOR TAKUSAN BALLS EDITION                     \n"
-    "                         By Riki-Oh aka Mawxiwtz                            \n");
+    "                    SHADOW WARRIOR TAKUSAN BALLS EDITION 1.1                  \n"
+    "                          By Riki-Oh aka Mawxiwtz                             \n");
     
     _setbkcolor(_BLACK);
     _settextcolor(7);

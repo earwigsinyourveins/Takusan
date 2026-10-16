@@ -94,6 +94,7 @@ static BOOL DemoAutoBots = FALSE;
 static BYTE DemoAutoBotCount = 0;
 
 extern int BotMode;
+extern BOOL MapCopyEnabled;
 
 static unsigned long DemoAutoRandom(VOID)
 {
@@ -412,12 +413,12 @@ static void DemoAutoBuildMapPart(char *map_part, unsigned map_part_size)
     map_part[map_part_size - 1] = '\0';
     }
 
-static int DemoAutoWriteWB(char *file_name, char *demo_base)
+static int DemoAutoWriteWB(char *file_name, char *demo_base, char *copied_map_name)
     {
     FILE *out;
     int i, instance_count, player_index, color;
     char map_arg[96];
-    char *dot;
+    char *dot, *map_source_name;
 
     out = fopen(file_name, "wt");
     if (out == NULL)
@@ -433,7 +434,12 @@ static int DemoAutoWriteWB(char *file_name, char *demo_base)
     map_arg[0] = '\0';
     if (DemoAutoLevel <= 0)
         {
-        strncpy(map_arg, DemoAutoMapName, sizeof(map_arg) - 1);
+        /* If the map was archived, launch the copy beside this WB file. */
+        if (copied_map_name != NULL && copied_map_name[0] != '\0')
+            map_source_name = copied_map_name;
+        else
+            map_source_name = DemoAutoMapName;
+        strncpy(map_arg, map_source_name, sizeof(map_arg) - 1);
         map_arg[sizeof(map_arg) - 1] = '\0';
         dot = strrchr(map_arg, '.');
         if (dot == NULL || stricmp(dot, ".map") != 0)
@@ -478,10 +484,85 @@ static int DemoAutoWriteWB(char *file_name, char *demo_base)
     return TRUE;
     }
 
+/* Resolve a user-map filename, adding .map when it is omitted. */
+static int DemoAutoResolveMapFile(char *map_file, unsigned map_file_size)
+    {
+    char *dot;
+    size_t len;
+
+    if (DemoAutoMapName[0] == '\0' || map_file == NULL || map_file_size == 0)
+        return FALSE;
+
+    strncpy(map_file, DemoAutoMapName, map_file_size - 1);
+    map_file[map_file_size - 1] = '\0';
+    dot = strrchr(map_file, '.');
+    if (dot == NULL || stricmp(dot, ".map") != 0)
+        {
+        len = strlen(map_file);
+        if (len + 4 >= map_file_size)
+            return FALSE;
+        strcat(map_file, ".map");
+        }
+    return TRUE;
+    }
+
+/* Copy a user map beside the archived demo and return its basename for WB. */
+static int DemoAutoCopyMap(char *folder_path, char *copied_map_name,
+                           unsigned copied_name_size)
+    {
+    char source_map[96], dest_map[128];
+    char *slash, *backslash, *leaf;
+
+    if (!MapCopyEnabled || DemoAutoLevel > 0 || copied_map_name == NULL ||
+        copied_name_size == 0)
+        return FALSE;
+    copied_map_name[0] = '\0';
+    if (!DemoAutoResolveMapFile(source_map, sizeof(source_map)))
+        return FALSE;
+
+    slash = strrchr(source_map, '/');
+    backslash = strrchr(source_map, '\\');
+    leaf = source_map;
+    if (slash != NULL && (backslash == NULL || slash > backslash))
+        leaf = slash + 1;
+    else if (backslash != NULL)
+        leaf = backslash + 1;
+    if (leaf[0] == '\0' || strlen(leaf) >= copied_name_size)
+        return FALSE;
+
+    strcpy(copied_map_name, leaf);
+    sprintf(dest_map, "%s\\%s", folder_path, leaf);
+    if (!DemoAutoCopyFile(source_map, dest_map))
+        {
+        copied_map_name[0] = '\0';
+        return FALSE;
+        }
+    return TRUE;
+    }
+
+/* Return the size of a user-supplied map file without reading its contents.
+   Campaign levels are excluded by the caller. */
+static int DemoAutoMapFileSize(unsigned long *size_result)
+    {
+    char map_file[96];
+    struct stat map_info;
+
+    if (size_result == NULL ||
+        !DemoAutoResolveMapFile(map_file, sizeof(map_file)))
+        return FALSE;
+
+    if (stat(map_file, &map_info) != 0 || map_info.st_size < 0L)
+        return FALSE;
+
+    *size_result = (unsigned long)map_info.st_size;
+    return TRUE;
+    }
+
 static int DemoAutoWriteTXT(char *file_name, char *demo_base, char *archive_label)
     {
     FILE *out;
     int i, count;
+    unsigned long map_size;
 
     out = fopen(file_name, "wt");
     if (out == NULL)
@@ -492,8 +573,15 @@ static int DemoAutoWriteTXT(char *file_name, char *demo_base, char *archive_labe
     
     if (DemoAutoLevel > 0)
         fprintf(out, "LEVEL: %d\n", (int)DemoAutoLevel);
-	else
-		fprintf(out, "MAP: %s\n", DemoAutoMapName);
+    else
+        {
+        /* Report map size only for user maps, never for campaign levels. */
+        if (DemoAutoMapFileSize(&map_size))
+            fprintf(out, "MAP: %s | SIZE: %lu BYTES\n",
+                    DemoAutoMapName, map_size);
+        else
+            fprintf(out, "MAP: %s | SIZE: UNAVAILABLE\n", DemoAutoMapName);
+        }
 	
 	
 	
@@ -512,10 +600,10 @@ static int DemoAutoWriteTXT(char *file_name, char *demo_base, char *archive_labe
             fprintf(out, "PLAYER %d: %s | KILLS: %d\n", i + 1,
                     DemoAutoPlayerNames[i], (int)DemoAutoPlayerKills[i]);
         else
-            fprintf(out, "PLAYER %d: %s | KILLS: unavailable\n", i + 1,
+            fprintf(out, "PLAYER %d: %s | KILLS: UNAVAILABLE\n", i + 1,
                     DemoAutoPlayerNames[i][0] ? DemoAutoPlayerNames[i] : "Unknown");
         }
-    fprintf(out, "SUBMIT YOUR DEMO TO WANGBANG DEMO ARCHIVE IF YOU HAVE BIG DICK https://desomorphine.ru/sw/demos\n"); 
+    fprintf(out, "SUBMIT YOUR DEMO TO WANGBANG DEMO ARCHIVE! https://desomorphine.ru/sw/demos\n"); 
     if (fclose(out) != 0)
         return FALSE;
     return TRUE;
@@ -580,11 +668,12 @@ static VOID DemoAutoRecordFinish(VOID)
     time_t stamp;
     char source_name[96], folder_path[96], dest_demo[128];
     char dest_wb[128], dest_txt[128], demo_base[16];
+    char copied_map_name[96];
     unsigned long folder_number;
     char map_part[80], date_part[16], player_part[384], archive_label[512];
     char kill_text[16];
     char *leaf, *dot, *slash, *backslash;
-    int i, copied, label_player_count;
+    int i, copied, map_copied, label_player_count;
 
     strcpy(source_name, DemoFileName);
     slash = strrchr(source_name, '/');
@@ -627,6 +716,18 @@ static VOID DemoAutoRecordFinish(VOID)
     if (!copied)
         printf("Automatic demo archive warning: could not copy %s.\n", DemoFileName);
 
+    /* Copy only user maps (never campaign levels), and only when enabled. */
+    copied_map_name[0] = '\0';
+    map_copied = FALSE;
+    if (DemoAutoLevel <= 0 && MapCopyEnabled)
+        {
+        map_copied = DemoAutoCopyMap(folder_path, copied_map_name,
+                                     sizeof(copied_map_name));
+        if (!map_copied)
+            printf("Automatic demo archive warning: could not copy user map %s.\n",
+                   DemoAutoMapName);
+        }
+
     DemoAutoBuildMapPart(map_part, sizeof(map_part));
     if (stat(DemoFileName, &file_info) == 0)
         stamp = file_info.st_mtime;
@@ -660,7 +761,8 @@ static VOID DemoAutoRecordFinish(VOID)
     strcat(archive_label, "_");
     strcat(archive_label, date_part);
 
-    if (!DemoAutoWriteWB(dest_wb, demo_base))
+    if (!DemoAutoWriteWB(dest_wb, demo_base,
+                         map_copied ? copied_map_name : NULL))
         printf("Automatic demo archive warning: could not write %s.\n", dest_wb);
     if (!DemoAutoWriteTXT(dest_txt, demo_base, archive_label))
         printf("Automatic demo archive warning: could not write %s.\n", dest_txt);

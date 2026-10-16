@@ -64,8 +64,9 @@ char  RTSName[MAXRTSNAMELENGTH];
 char setupfilename[64]={SETUPFILENAME};
 static int32 scripthandle;
 
-/* Takusan demo rewind toggle. The default is ON for existing SW.CFG files. */
+/* Takusan settings default to enabled for existing SW.CFG files. */
 BOOL DemoRewindEnabled = TRUE;
+BOOL MapCopyEnabled = TRUE;
 
 static void CONFIG_TrimTakusanLine(char *line)
    {
@@ -89,24 +90,27 @@ static int CONFIG_IsTakusanMarker(char *line)
    return (stricmp(line, ";TAKUSAN SETTINGS") == 0);
    }
 
-/* Parse DemoRewind = 0/1 only after the custom footer marker. */
-static int CONFIG_ParseTakusanRewind(char *line, int *value)
+/* Parse a Boolean Takusan setting only after the custom footer marker. */
+static int CONFIG_ParseTakusanBoolean(char *line, char *setting_name, int *value)
    {
+   char work[128];
    char *equals, *key_end, *p;
 
-   CONFIG_TrimTakusanLine(line);
-   if (line[0] == '\0' || line[0] == ';' || line[0] == '#')
+   strncpy(work, line, sizeof(work) - 1);
+   work[sizeof(work) - 1] = '\0';
+   CONFIG_TrimTakusanLine(work);
+   if (work[0] == '\0' || work[0] == ';' || work[0] == '#')
       return FALSE;
 
-   equals = strchr(line, '=');
+   equals = strchr(work, '=');
    if (equals == NULL)
       return FALSE;
    *equals = '\0';
 
-   key_end = line + strlen(line);
-   while (key_end > line && (key_end[-1] == ' ' || key_end[-1] == '\t'))
+   key_end = work + strlen(work);
+   while (key_end > work && (key_end[-1] == ' ' || key_end[-1] == '\t'))
       *--key_end = '\0';
-   if (stricmp(line, "DemoRewind") != 0)
+   if (stricmp(work, setting_name) != 0)
       return FALSE;
 
    p = equals + 1;
@@ -128,6 +132,7 @@ static void CONFIG_ReadTakusanSettings(void)
    int in_settings, value;
 
    DemoRewindEnabled = TRUE;
+   MapCopyEnabled = TRUE;
    fp = fopen(setupfilename, "rt");
    if (fp == NULL)
       return;
@@ -142,8 +147,10 @@ static void CONFIG_ReadTakusanSettings(void)
          }
       if (!in_settings)
          continue;
-      if (CONFIG_ParseTakusanRewind(line, &value))
+      if (CONFIG_ParseTakusanBoolean(line, "DemoRewind", &value))
          DemoRewindEnabled = value ? TRUE : FALSE;
+      if (CONFIG_ParseTakusanBoolean(line, "MapCopy", &value))
+         MapCopyEnabled = value ? TRUE : FALSE;
       }
    fclose(fp);
    }
@@ -154,11 +161,12 @@ static void CONFIG_EnsureTakusanSettings(void)
    {
    FILE *fp;
    char line[128];
-   int in_settings, marker_found, value_found, ignored_value;
+   int in_settings, marker_found, rewind_found, mapcopy_found, ignored_value;
 
    in_settings = FALSE;
    marker_found = FALSE;
-   value_found = FALSE;
+   rewind_found = FALSE;
+   mapcopy_found = FALSE;
    fp = fopen(setupfilename, "rt");
    if (fp != NULL)
       {
@@ -168,16 +176,20 @@ static void CONFIG_EnsureTakusanSettings(void)
             {
             in_settings = TRUE;
             marker_found = TRUE;
-            value_found = FALSE;
             continue;
             }
-         if (in_settings && CONFIG_ParseTakusanRewind(line, &ignored_value))
-            value_found = TRUE;
+         if (in_settings)
+            {
+            if (CONFIG_ParseTakusanBoolean(line, "DemoRewind", &ignored_value))
+               rewind_found = TRUE;
+            if (CONFIG_ParseTakusanBoolean(line, "MapCopy", &ignored_value))
+               mapcopy_found = TRUE;
+            }
          }
       fclose(fp);
       }
 
-   if (marker_found && value_found)
+   if (marker_found && rewind_found && mapcopy_found)
       return;
 
    fp = fopen(setupfilename, "at");
@@ -185,7 +197,10 @@ static void CONFIG_EnsureTakusanSettings(void)
       return;
    if (!marker_found)
       fprintf(fp, "\n;TAKUSAN SETTINGS\n");
-   fprintf(fp, "DemoRewind = %d\n", DemoRewindEnabled ? 1 : 0);
+   if (!rewind_found)
+      fprintf(fp, "DemoRewind = %d\n", DemoRewindEnabled ? 1 : 0);
+   if (!mapcopy_found)
+      fprintf(fp, "MapCopy = %d\n", MapCopyEnabled ? 1 : 0);
    fclose(fp);
    }
 
