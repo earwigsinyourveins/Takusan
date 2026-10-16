@@ -1,4 +1,4 @@
-<img width="1339" height="956" alt="banner4" src="https://github.com/user-attachments/assets/d337d229-a914-4639-b317-50838a3640fc" />
+<img width="1600" height="1143" alt="banner4" src="https://github.com/user-attachments/assets/8b3e9ccd-7324-473f-a747-f38377d738f2" />
 
 
 # Takusan is a fork of Shadow Warrior 1.2 with multiplayer-related QoL, bugfixes, and restored features.
