@@ -8,7 +8,7 @@ Changes as of yet:
 1. Automatic demo recording of multiplayer games, regardless if it was started from COMMIT/SETUP or in-game menu, including composure of .WB files for WangBang demo player.
 2. Re-enabled fast forward/slo-mo demo controls, added demo pause and rewinding. Rewinding could be toggled off by setting `DemoRewind` to 0 under `;TAKUSAN SETTINGS` in your SW.CFG   
    Controls: S to slo-mo, F to fast forward, Shift+F for accelerated fast forward, R to rewind, Q to pause/unpause
-3. Re-enabled bots with uncommented better pathfinding, could be toggled on with `-bots#` argument. Example: `sw -level23 -bots7`. Thanks to La Wong aka Mow_Cat for pointers on this.
+3. Re-enabled bots with uncommented better pathfinding, could be toggled on with `-bots#` argument. Example: `sw -level23 -bots7`. Thanks to La Wong aka Mow_Cat for pointers.
 4. `-aim#` argument to toggle `AutoAim` on and off. This helps with multiplayer games started via `-autonet`.
 5. Merged improved movement prediction from VoidSW. Thanks to THEBaratusII for pointing that out.
 6. Patched MACT386.LIB with Build Mouse Fix by CTPAX aka CHE@TER.
