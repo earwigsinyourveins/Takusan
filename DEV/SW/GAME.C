@@ -166,6 +166,8 @@ int GodMode = FALSE;
 int BotMode = FALSE;
 /* -1 uses SW.CFG; 0/1 temporarily override AutoAim at launch. */
 int AutoAimCommandLineOverride = -1;
+/* Marks -dr so automatic multiplayer recording can override it when eligible. */
+static BOOL DemoRecordCommandLine = FALSE;
 short Skill = 2;
 short BetaVersion = 900;
 short moustat;
@@ -3215,23 +3217,34 @@ VOID InitRunLevel(VOID)
 
     if (!DemoInitOnce)
         {
-        /* Preserve first-entry setup. Automatic recording is started here
-           for the first multiplayer match, before DemoRecordSetup writes
-           the demo header. */
-        if (!DemoRecording && !DemoPlaying && !DemoEdit && !DemoMode &&
-            !BotMode && numplayers > 1)
+        /* Preserve first-entry setup. For eligible regular multiplayer, auto
+           recording may replace a pending command-line -dr request. */
+        if (!DemoPlaying && !DemoEdit && !DemoMode && !BotMode &&
+            numplayers > 1 && (!DemoRecording || DemoRecordCommandLine))
+            {
+            if (DemoRecordCommandLine)
+                {
+                DemoRecording = FALSE;
+                DemoRecordCommandLine = FALSE;
+                }
             DemoAutoRecordStart();
+            }
 
         DemoRecordSetup();
         }
-    else if (!DemoRecording && !DemoPlaying && !DemoEdit && !DemoMode &&
-             !BotMode && numplayers > 1)
-        {
-        /* DemoInitOnce stays TRUE across in-game-menu re-entry. Start a new
-           automatic recording for each subsequent multiplayer match too. */
-        DemoAutoRecordStart();
-        DemoRecordSetup();
-        }
+    else if (!DemoPlaying && !DemoEdit && !DemoMode && !BotMode &&
+             numplayers > 1 && (!DemoRecording || DemoRecordCommandLine))
+       {
+       /* DemoInitOnce stays TRUE across in-game-menu re-entry. Start a new
+         automatic recording for each subsequent multiplayer match too. */
+         if (DemoRecordCommandLine)
+             {
+              DemoRecording = FALSE;
+              DemoRecordCommandLine = FALSE;
+             }
+    DemoAutoRecordStart();
+    DemoRecordSetup();
+    }
 
     // everything has been inited at least once for RECORD
     DemoInitOnce = TRUE;
@@ -3651,7 +3664,7 @@ VOID AlphaMessage(VOID)
     _setbkcolor(_LIGHTBLUE);
     _settextcolor(15);
     _outtext(""
-    "                    SHADOW WARRIOR TAKUSAN BALLS EDITION 1.1                  \n"
+    "                    SHADOW WARRIOR TAKUSAN BALLS EDITION 1.2                  \n"
     "                          By Riki-Oh aka Mawxiwtz                             \n");
     
     _setbkcolor(_BLACK);
@@ -4110,20 +4123,22 @@ main(short int argc, char *argv[])
                 }    
             }
         else
-		if (memcmp(argv[cnt], "-dr", 3) == 0)
-            {
-            //NumSyncBytes = 8;
-            DemoRecording = TRUE;
-            DemoPlaying = FALSE;
-            DemoRecCnt = 0;
-
-            if (strlen(argv[cnt]) > 3)
-                {
-                strcpy(DemoFileName, &argv[cnt][3]);
-                if (strchr(DemoFileName, '.') == 0)
-                    strcat(DemoFileName, ".dmo");
-                }    
-            }
+        if (memcmp(argv[cnt], "-dr", 3) == 0)
+          {
+          /* Keep manual -dr recording available. If a regular multiplayer
+             match starts, RunLevel() replaces this request with auto-record. */
+          DemoRecording = TRUE;
+          DemoPlaying = FALSE;
+          DemoRecCnt = 0;
+          DemoRecordCommandLine = TRUE;
+  
+          if (strlen(argv[cnt]) > 3)
+              {
+              strcpy(DemoFileName, &argv[cnt][3]);
+              if (strchr(DemoFileName, '.') == 0)
+                  strcat(DemoFileName, ".dmo");
+              }
+          }
         else
 		if (memcmp(argv[cnt], "-dp", 3) == 0)
             {
