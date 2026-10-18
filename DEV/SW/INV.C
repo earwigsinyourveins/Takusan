@@ -1,3 +1,4 @@
+// This file has been modified from Ken Silverman's original release
 #undef MAIN
 #include <stdlib.h>
 #include <string.h>
@@ -75,10 +76,12 @@ VOID UpdateMiniBar(PLAYERp pp)
     BOOL found;
     INVENTORY_DATAp id;
     extern BOOL PanelUpdateMode;
+    extern BOOL MinHUDArmorEnabled;
     
     #define MINI_BAR_Y 174
     
     #define MINI_BAR_HEALTH_BOX_PIC 2437
+    #define MINI_BAR_ARMOR_BOX_PIC 2437
     #define MINI_BAR_AMMO_BOX_PIC 2437
     #define MINI_BAR_INVENTORY_BOX_PIC 2438
     
@@ -93,6 +96,20 @@ VOID UpdateMiniBar(PLAYERp pp)
     if (gs.BorderNum != BORDER_MINI_BAR)
         return;
     
+    /* Put the optional armor box above the health box, using the same
+       frame and number graphics as the other minimized HUD counters. */
+    if (MinHUDArmorEnabled)
+        {
+        x = MINI_BAR_HEALTH_BOX_X;
+        y = 200 - 50;
+        rotatesprite(x << 16, y << 16, (1 << 16), 0,
+            MINI_BAR_ARMOR_BOX_PIC, 0, 0,
+            ROTATE_SPRITE_SCREEN_CLIP | ROTATE_SPRITE_CORNER, 0, 0, xdim - 1, ydim - 1);
+
+        x = MINI_BAR_HEALTH_BOX_X+3;
+        DisplayMiniBarNumber(pp, x, y+5, pp->Armor);
+        }
+
     x = MINI_BAR_HEALTH_BOX_X;
     y = 200 - 26;
     

@@ -1,3 +1,4 @@
+// This file has been modified from Ken Silverman's original release
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -67,6 +68,7 @@ static int32 scripthandle;
 /* Takusan settings default to enabled for existing SW.CFG files. */
 BOOL DemoRewindEnabled = TRUE;
 BOOL MapCopyEnabled = TRUE;
+BOOL MinHUDArmorEnabled = TRUE;
 
 static void CONFIG_TrimTakusanLine(char *line)
    {
@@ -133,6 +135,7 @@ static void CONFIG_ReadTakusanSettings(void)
 
    DemoRewindEnabled = TRUE;
    MapCopyEnabled = TRUE;
+   MinHUDArmorEnabled = TRUE;
    fp = fopen(setupfilename, "rt");
    if (fp == NULL)
       return;
@@ -151,6 +154,8 @@ static void CONFIG_ReadTakusanSettings(void)
          DemoRewindEnabled = value ? TRUE : FALSE;
       if (CONFIG_ParseTakusanBoolean(line, "MapCopy", &value))
          MapCopyEnabled = value ? TRUE : FALSE;
+      if (CONFIG_ParseTakusanBoolean(line, "MinHUDArmor", &value))
+         MinHUDArmorEnabled = value ? TRUE : FALSE;
       }
    fclose(fp);
    }
@@ -161,12 +166,14 @@ static void CONFIG_EnsureTakusanSettings(void)
    {
    FILE *fp;
    char line[128];
-   int in_settings, marker_found, rewind_found, mapcopy_found, ignored_value;
+   int in_settings, marker_found, rewind_found, mapcopy_found;
+   int minhudarmor_found, ignored_value;
 
    in_settings = FALSE;
    marker_found = FALSE;
    rewind_found = FALSE;
    mapcopy_found = FALSE;
+   minhudarmor_found = FALSE;
    fp = fopen(setupfilename, "rt");
    if (fp != NULL)
       {
@@ -184,12 +191,14 @@ static void CONFIG_EnsureTakusanSettings(void)
                rewind_found = TRUE;
             if (CONFIG_ParseTakusanBoolean(line, "MapCopy", &ignored_value))
                mapcopy_found = TRUE;
+            if (CONFIG_ParseTakusanBoolean(line, "MinHUDArmor", &ignored_value))
+               minhudarmor_found = TRUE;
             }
          }
       fclose(fp);
       }
 
-   if (marker_found && rewind_found && mapcopy_found)
+   if (marker_found && rewind_found && mapcopy_found && minhudarmor_found)
       return;
 
    fp = fopen(setupfilename, "at");
@@ -201,6 +210,8 @@ static void CONFIG_EnsureTakusanSettings(void)
       fprintf(fp, "DemoRewind = %d\n", DemoRewindEnabled ? 1 : 0);
    if (!mapcopy_found)
       fprintf(fp, "MapCopy = %d\n", MapCopyEnabled ? 1 : 0);
+   if (!minhudarmor_found)
+      fprintf(fp, "MinHUDArmor = %d\n", MinHUDArmorEnabled ? 1 : 0);
    fclose(fp);
    }
 
