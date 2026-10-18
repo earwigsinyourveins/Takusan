@@ -12,6 +12,7 @@ Changes as of yet:
 4. `-aim#` argument to toggle `AutoAim` on and off. This helps with multiplayer games started via `-autonet`.
 5. Merged improved movement prediction from VoidSW. Thanks to THEBaratusII for pointing that out.
 6. Patched MACT386.LIB with Build Mouse Fix by CTPAX aka CHE@TER.
+7. Armor display for minimal HUD. Could be toggled off by setting `MinHUDArmor` to 0 in SW.CFG
 
 Builds with Watcom C/C++ 10.6.
 

@@ -3664,7 +3664,7 @@ VOID AlphaMessage(VOID)
     _setbkcolor(_LIGHTBLUE);
     _settextcolor(15);
     _outtext(""
-    "                    SHADOW WARRIOR TAKUSAN BALLS EDITION 1.2                  \n"
+    "                    SHADOW WARRIOR TAKUSAN BALLS EDITION 1.3                  \n"
     "                          By Riki-Oh aka Mawxiwtz                             \n");
     
     _setbkcolor(_BLACK);

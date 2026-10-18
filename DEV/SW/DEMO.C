@@ -77,10 +77,8 @@ extern long ototalclock;
 extern unsigned long MoveThingsCount;
 extern BOOL MoveSkip2, MoveSkip4, MoveSkip8;
 
-/* Automatic multiplayer demo recording uses its own PRNG so it does not
-   disturb the game's synchronized random-number sequence. */
+/* Automatic multiplayer demo recording metadata. */
 static BOOL DemoAutoRecording = FALSE;
-static unsigned long DemoAutoRandomState = 0;
 static char DemoAutoPlayerNames[MAX_SW_PLAYERS][32];
 static short DemoAutoPlayerKills[MAX_SW_PLAYERS];
 static char DemoAutoPlayerColors[MAX_SW_PLAYERS];
@@ -95,21 +93,6 @@ static BYTE DemoAutoBotCount = 0;
 
 extern int BotMode;
 extern BOOL MapCopyEnabled;
-
-static unsigned long DemoAutoRandom(VOID)
-{
-    if (DemoAutoRandomState == 0)
-    {
-        DemoAutoRandomState = (unsigned long)time(NULL);
-        DemoAutoRandomState ^= (unsigned long)clock();
-        DemoAutoRandomState ^= (unsigned long)MoveThingsCount;
-        if (DemoAutoRandomState == 0)
-            DemoAutoRandomState = 0x13579BDFUL;
-    }
-
-    DemoAutoRandomState = DemoAutoRandomState * 1664525UL + 1013904223UL;
-    return DemoAutoRandomState;
-}
 
 ///////////////////////////////////////////    
 //
@@ -237,14 +220,15 @@ DemoWriteHeader(VOID)
         }
     }
 
-/* Start recording a multiplayer match to DEMOS\XXXXXXXX.DMO. The directory
-   and filename are prepared before DemoRecordSetup writes the demo header. */
+/* Start recording a multiplayer match to DEMOS\DDMMYY##.DMO. The date
+   and next daily sequence are prepared before DemoRecordSetup writes the header. */
 VOID
 DemoAutoRecordStart(VOID)
     {
-    static char name_chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     struct stat dir_info;
-    int i, attempt;
+    time_t record_stamp;
+    struct tm *record_time;
+    int i, attempt, next_sequence, extended_sequence;
 
     if (DemoRecording || DemoPlaying || DemoEdit || DemoMode)
         return;
@@ -258,23 +242,56 @@ DemoAutoRecordStart(VOID)
             }
         }
 
-    for (attempt = 0; attempt < 4096; attempt++)
+    /* Use the DOS system date and preserve the highest existing daily number.
+       Sequences 01-99 are numeric; 100-359 use A0-Z9. Scanning existing files
+       makes numbering survive game restarts. */
+    time(&record_stamp);
+    record_time = localtime(&record_stamp);
+    if (record_time == NULL || record_time->tm_mday < 1 ||
+        record_time->tm_mday > 31 || record_time->tm_mon < 0 ||
+        record_time->tm_mon > 11)
         {
-        strcpy(DemoFileName, "DEMOS\\");
-        for (i = 0; i < 8; i++)
-            DemoFileName[6 + i] = name_chars[DemoAutoRandom() % 36UL];
-        DemoFileName[14] = '.';
-        strcpy(&DemoFileName[15], "DMO");
-
-        /* Bundle folders are numbered separately when the recording ends. */
-        if (access(DemoFileName, 0) != 0)
-            break;
+        printf("Automatic demo recording disabled: could not read the system date.\n");
+        return;
         }
 
-    if (attempt >= 4096)
+    next_sequence = 1;
+    for (attempt = 1; attempt <= 359; attempt++)
         {
-        printf("Automatic demo recording disabled: could not choose a filename.\n");
+        if (attempt <= 99)
+            sprintf(DemoFileName, "DEMOS\\%02d%02d%02d%02d.DMO",
+                    record_time->tm_mday, record_time->tm_mon + 1,
+                    (record_time->tm_year + 1900) % 100, attempt);
+        else
+            {
+            extended_sequence = attempt - 100;
+            sprintf(DemoFileName, "DEMOS\\%02d%02d%02d%c%d.DMO",
+                    record_time->tm_mday, record_time->tm_mon + 1,
+                    (record_time->tm_year + 1900) % 100,
+                    'A' + (extended_sequence / 10), extended_sequence % 10);
+            }
+
+        if (access(DemoFileName, 0) == 0)
+            next_sequence = attempt + 1;
+        }
+
+    if (next_sequence > 359)
+        {
+        printf("Automatic demo recording disabled: daily demo number limit (359) has been reached.\n");
         return;
+        }
+
+    if (next_sequence <= 99)
+        sprintf(DemoFileName, "DEMOS\\%02d%02d%02d%02d.DMO",
+                record_time->tm_mday, record_time->tm_mon + 1,
+                (record_time->tm_year + 1900) % 100, next_sequence);
+    else
+        {
+        extended_sequence = next_sequence - 100;
+        sprintf(DemoFileName, "DEMOS\\%02d%02d%02d%c%d.DMO",
+                record_time->tm_mday, record_time->tm_mon + 1,
+                (record_time->tm_year + 1900) % 100,
+                'A' + (extended_sequence / 10), extended_sequence % 10);
         }
 
     DemoRecCnt = 0;
