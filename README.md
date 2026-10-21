@@ -17,3 +17,5 @@ Changes as of yet:
 Builds with Watcom C/C++ 10.6.
 
 For the sake of transparency, this project extensively uses AI code.
+
+If you're looking for a similiar set of enhancements for VoidSW, check out [Kuro](https://github.com/earwigsinyourveins/Kuro).
